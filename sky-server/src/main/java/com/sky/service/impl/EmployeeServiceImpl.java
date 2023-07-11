@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
-import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
@@ -14,7 +13,9 @@ import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.EmployeeMapper;
+import com.sky.mapper.SetMealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
@@ -81,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
         long total = page.getTotal();
         List<Employee> result = page.getResult();
-        System.out.println(employeePageQueryDTO + "=====>");
+//        System.out.println(employeePageQueryDTO + "=====>");
         return new PageResult(total, result);
     }
 
@@ -104,13 +105,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                 );
         //用户状态是否锁定：0锁定，1正常
         employee.setStatus(StatusConstant.ENABLE);
-        //创建时间
-        employee.setCreateTime(LocalDateTime.now());
-        //更新时间
-        employee.setUpdateTime(LocalDateTime.now());
-        //创建和修改创建人ID
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //创建时间
+//        employee.setCreateTime(LocalDateTime.now());
+//        //更新时间
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //创建和修改创建人ID
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.save(employee);
 
     }
@@ -150,9 +151,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         //复制数据到新的对象
         BeanUtils.copyProperties(employeeDTO, employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
-        System.out.println("通过id修改用户信息===》" + employee);
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
+//        System.out.println("通过id修改用户信息===》" + employee);
         employeeMapper.putEmployeeById(employee);
     }
 
@@ -181,8 +182,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPassword(DigestUtils.md5DigestAsHex(passwordEditDTO
                 .getNewPassword()
                 .getBytes(StandardCharsets.UTF_8)));
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.putEmployeeById(employee);
         return MessageConstant.PASSWORD_EDIT_SUCCESS;
     }
