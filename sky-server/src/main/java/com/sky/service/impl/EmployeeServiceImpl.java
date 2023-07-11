@@ -104,13 +104,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                 );
         //用户状态是否锁定：0锁定，1正常
         employee.setStatus(StatusConstant.ENABLE);
-        //创建时间
-        employee.setCreateTime(LocalDateTime.now());
-        //更新时间
-        employee.setUpdateTime(LocalDateTime.now());
-        //创建和修改创建人ID
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //创建时间
+//        employee.setCreateTime(LocalDateTime.now());
+//        //更新时间
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //创建和修改创建人ID
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.save(employee);
 
     }
@@ -150,9 +150,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         //复制数据到新的对象
         BeanUtils.copyProperties(employeeDTO, employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
-        System.out.println("通过id修改用户信息===》" + employee);
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
+//        System.out.println("通过id修改用户信息===》" + employee);
         employeeMapper.putEmployeeById(employee);
     }
 
@@ -181,8 +181,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPassword(DigestUtils.md5DigestAsHex(passwordEditDTO
                 .getNewPassword()
                 .getBytes(StandardCharsets.UTF_8)));
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.putEmployeeById(employee);
         return MessageConstant.PASSWORD_EDIT_SUCCESS;
     }
