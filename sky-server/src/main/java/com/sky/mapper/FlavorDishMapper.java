@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface FlavorDish {
+public interface FlavorDishMapper {
 
     /**
      * 通过菜品id删除口味

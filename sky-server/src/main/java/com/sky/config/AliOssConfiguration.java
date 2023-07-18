@@ -19,7 +19,7 @@ public class AliOssConfiguration {
     //    初始化阿里云配置并返回连接
     @Bean
     public AliOssUtil aliOssUtil() {
-        log.info("开始创建阿里云文件上传工具类对象：{}", aliOssProperties);
+        log.info("开始创建阿里云文件上传工具类对象：");
         return new AliOssUtil(
                 aliOssProperties.getEndpoint(),
                 aliOssProperties.getAccessKeyId(),

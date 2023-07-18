@@ -21,7 +21,7 @@
         select *from category
         <where>
             <if test="name!=null and name!=''">and name like concat('%',#{name},'%')</if>
-            <if test="type!=null and type!=''">
+            <if test="type!=null">
                 and type=#{type}
             </if>
         </where>
@@ -31,6 +31,8 @@
     <select id="queryByTypeCategory" resultType="com.sky.entity.Category">
         select *
         from category
-        where type = #{type}
+        where status = 1
+        <if test="type!=null">and type = #{type}</if>
+        order by sort asc ,create_time desc
     </select>
 </mapper>

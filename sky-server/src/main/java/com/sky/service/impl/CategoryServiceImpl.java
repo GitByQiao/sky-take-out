@@ -17,6 +17,7 @@ import com.sky.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -56,8 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public ArrayList<Category> queryByTypeCategory(Integer type) {
-        ArrayList<Category> categories = categoryMapper.queryByTypeCategory(type);
-        return categories;
+        return categoryMapper.queryByTypeCategory(type);
     }
 
     /**
@@ -105,8 +105,8 @@ public class CategoryServiceImpl implements CategoryService {
      * @param id
      */
     @Override
+    @Transactional
     public void deleteByIdCategory(Long id) {
-        String msg = "";
         //查询当前分类是否关联了菜品，如果关联了就抛出业务异常
         Long countDish = dishMapper.getCountDish(id);
         if (countDish > 0) {

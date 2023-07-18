@@ -38,8 +38,8 @@ public class CategoryController {
     @ApiOperation(value = "分类分页查询")
     @GetMapping("/page")
     public Result<PageResult> pageQueryCategory(CategoryPageQueryDTO categoryPageQueryDTO) {
+        log.info("分类分页查询：{}", categoryPageQueryDTO);
         PageResult pageResult = categoryService.pageQueryCategory(categoryPageQueryDTO);
-        log.info("分类分页查询：{}", pageResult);
         return Result.success(pageResult);
     }
 
@@ -51,10 +51,9 @@ public class CategoryController {
      */
     @ApiOperation(value = "根据类型查询分类")
     @GetMapping("/list")
-    public Result<ArrayList<Category>> queryByTypeCategory(String type) {
-        Integer type1 = Integer.parseInt(type);
-        log.info("根据类型进行查询分类===》参数：{}", type);
-        ArrayList<Category> categories = categoryService.queryByTypeCategory(type1);
+    public Result<ArrayList<Category>> queryByTypeCategory(Integer type) {
+        log.info("根据类型进行查询分类参数：{}", type);
+        ArrayList<Category> categories = categoryService.queryByTypeCategory(type);
         return Result.success(categories);
     }
 
@@ -68,7 +67,7 @@ public class CategoryController {
     @ApiOperation("启用禁用分类")
     @PostMapping("/status/{status}")
     public Result putStatusCategory(
-            @PathVariable Integer status,
+            @PathVariable("status") Integer status,
             @RequestParam Long id) {
         log.info("启动禁用分类请求体id：{},地址参数：{}", id, status);
         categoryService.putStatusCategory(status, id);

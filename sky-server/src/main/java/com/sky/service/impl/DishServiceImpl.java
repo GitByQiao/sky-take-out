@@ -4,13 +4,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishMapper;
-import com.sky.mapper.FlavorDish;
+import com.sky.mapper.FlavorDishMapper;
 import com.sky.mapper.SetMealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
@@ -30,7 +31,7 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private SetMealMapper setMealMapper;
     @Autowired
-    private FlavorDish flavorDish;
+    private FlavorDishMapper flavorDishMapper;
 
     /**
      * 新增菜品和口味
@@ -94,7 +95,7 @@ public class DishServiceImpl implements DishService {
         //删除菜品之后要删除关联的口味
         for (Long id : ids) {
             dishMapper.deleteDishById(id);
-            flavorDish.deleteByDishIdFlavor(id);
+            flavorDishMapper.deleteByDishIdFlavor(id);
         }
     }
 
@@ -144,7 +145,7 @@ public class DishServiceImpl implements DishService {
         List<DishFlavor> flavors = dishVO.getFlavors();
         Long dishId = dishVO.getId();
         //删除口味
-        flavorDish.deleteByDishIdFlavor(dishId);
+        flavorDishMapper.deleteByDishIdFlavor(dishId);
         if (flavors != null && flavors.size() > 0) {
 //            新增口味的菜品id
             for (DishFlavor flavor : flavors) {
@@ -153,6 +154,18 @@ public class DishServiceImpl implements DishService {
             //新增口味
             dishMapper.postFlavors(flavors);
         }
+    }
 
+    /**
+     * 根据分类id查询菜品
+     *
+     * @param categoryId
+     */
+    @Override
+    public List<Dish> getTypeByIdDish(Long categoryId) {
+        Dish dish = new Dish();
+        dish.setCategoryId(categoryId);
+        dish.setStatus(StatusConstant.ENABLE);
+        return dishMapper.getByCategoryIdDish(dish);
     }
 }

@@ -20,13 +20,13 @@ import java.util.List;
 @Mapper
 public interface DishMapper {
     /**
-     * 根据分类id查询所有
+     * 根据分类id查询菜品数量
      *
-     * @param id
+     * @param categoryId
      * @return
      */
-    @Select("select count(id) from dish where category_id=#{id} order by id")
-    Long getCountDish(Long id);
+    @Select("select count(id) from dish where category_id=#{categoryId}")
+    Long getCountDish(Long categoryId);
 
     /**
      * 新增菜品
@@ -101,4 +101,11 @@ public interface DishMapper {
      */
     void putBaseDish(DishVO dishVO);
 
+    /**
+     * 通过分类id查询菜品
+     *
+     * @param dish
+     * @return
+     */
+    List<Dish> getByCategoryIdDish(Dish dish);
 }

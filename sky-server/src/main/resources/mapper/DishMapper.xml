@@ -18,7 +18,7 @@
     <!--添加口味-->
     <insert id="postFlavors">
         insert into dish_flavor(dish_id, name, value) values
-        <foreach collection="flavors" item="flavor">
+        <foreach collection="flavors" item="flavor" separator=",">
             (#{flavor.dishId},#{flavor.name},#{flavor.value})
         </foreach>
     </insert>
@@ -54,5 +54,15 @@
             <if test="status!=null">and dish.status=#{status}</if>
         </where>
         order by dish.create_time desc
+    </select>
+    <!--    根据分类id查询菜品-->
+    <select id="getByCategoryIdDish" resultType="com.sky.entity.Dish">
+        select *from dish
+        <where>
+            <if test="name!=null">and name like concat('%',#{name},'%')</if>
+            <if test="categoryId!=null">and category_id=#{categoryId}</if>
+            <if test="status!=null">and status=#{status}</if>
+        </where>
+        order by create_time desc
     </select>
 </mapper>

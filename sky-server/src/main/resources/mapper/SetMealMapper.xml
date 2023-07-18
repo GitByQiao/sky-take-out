@@ -3,6 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sky.mapper.SetMealMapper">
+    <!--    添加套餐表套餐-->
+    <insert id="postSetMeal" useGeneratedKeys="true" keyProperty="id">
+        insert into setmeal(category_id, name, price, description, status,
+                            image, create_time, update_time, create_user, update_user)
+        VALUES (#{categoryId}, #{name}, #{price}, #{description}, #{status},
+                #{image}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+    <!--    添加套菜和菜品联表里面的数据-->
+    <insert id="postSetMealDishes">
+        insert into setmeal_dish(setmeal_id, dish_id, name, price, copies)
+        VALUES (#{setmealId}, #{dishId}, #{name}, #{price}, #{copies})
+    </insert>
+    <!--    修改套餐表数据-->
+    <update id="putSetMeal">
+        update setmeal
+        <set>
+            <if test="categoryId!=null">category_id=#{categoryId},</if>
+            <if test="name!=null">name=#{name},</if>
+            <if test="price!=null">price=#{price},</if>
+            <if test="image!=null">image=#{image},</if>
+            <if test="updateTime!=null">update_time=#{updateTime},</if>
+            <if test="description!=null">description=#{description},</if>
+            <if test="status!=null">status=#{status}</if>
+        </set>
+        where id = #{id}
+    </update>
 
     <!--    根据菜品id查询套餐数量-->
     <select id="getCountByIdDish" resultType="java.lang.Long">
@@ -10,5 +36,17 @@
         <foreach collection="ids" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
+    </select>
+    <!--    套餐分页查询-->
+    <select id="getPageQuerySetMeal" resultType="com.sky.vo.SetmealVO">
+        select setmeal.*, category.name categoryName
+        from setmeal
+        left join category on setmeal.category_id = category.id
+        <where>
+            <if test="name!=null">and setmeal.name like concat('%',#{name},'%')</if>
+            <if test="status!=null">and setmeal.status=#{status}</if>
+            <if test="categoryId!=null">and setmeal.category_id=#{categoryId}</if>
+        </where>
+        order by setmeal.create_time desc
     </select>
 </mapper>

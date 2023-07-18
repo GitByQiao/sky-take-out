@@ -55,4 +55,10 @@ public interface DishService {
      * @param dishVO
      */
     void putDish(DishVO dishVO);
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     */
+    List<Dish> getTypeByIdDish(Long categoryId);
 }
