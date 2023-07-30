@@ -5,6 +5,7 @@ import com.sky.entity.Orders;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderVO extends Orders implements Serializable {
+public class OrderSearchVO extends Orders implements Serializable {
 
     //订单菜品信息
     //private Orders orderDishes;
@@ -89,6 +90,6 @@ public class OrderVO extends Orders implements Serializable {
     private Integer tablewareStatus;
 
     //订单详情
-    private List<OrderDetail> orderDetailList;
+    private String orderDishes;
 
 }

@@ -29,6 +29,12 @@ public class Orders implements Serializable {
     public static final Integer CANCELLED = 6;
 
     /**
+     * 超时未支付
+     */
+    public static final String PAY_OUT_TIME = "超时未支付,已取消";
+
+
+    /**
      * 支付状态 0未支付 1已支付 2退款
      */
     public static final Integer UN_PAID = 0;

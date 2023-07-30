@@ -17,6 +17,11 @@
             <version>2.7.3</version>
             <optional>true</optional>
         </dependency>
+        <!--        webSocket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.sky</groupId>
             <artifactId>sky-common</artifactId>
