@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sky.mapper.ReportMapper">
+
+    <!--    查询每天营业额-->
+    <select id="getAmountReport" resultType="java.lang.Double">
+        select sum(amount)
+        from orders
+        <where>
+            <if test="minDateTime!=null">
+                and delivery_time &gt;= #{minDateTime}
+            </if>
+            <if test="maxDateTime!=null">
+                and delivery_time &lt;=#{maxDateTime}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+    <!--    订单列表-->
+    <select id="getCountOrder" resultType="java.lang.Integer">
+        select count(id)
+        from orders
+        <where>
+            <if test="begin!=null">
+                and order_time &gt;=#{begin}
+            </if>
+            <if test="end!=null">
+                and order_time &lt;=#{end}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+    <!--    查询商品名称和销量排名top10-->
+    <select id="getSaleTop10" resultType="com.sky.dto.GoodsSalesDTO">
+        select od.name, sum(od.number) as number
+        from orders
+        left outer join order_detail od on orders.id = od.order_id
+        <where>
+            <if test="minDateTime!=null">and order_time&gt;=#{minDateTime}</if>
+            <if test="maxDateTime!=null">and order_time&lt;=#{maxDateTime}</if>
+            <if test="status!=null">and status=#{status}</if>
+        </where>
+        group by od.name order by number desc
+    </select>
+</mapper>
